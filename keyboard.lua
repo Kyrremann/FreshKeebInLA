@@ -16,53 +16,80 @@ local Keyboard = {
 }
 
 function Keyboard:setup(font, boxWidth, boxHeight)
-   self.alphabet = self.homerow
    self.font = font
    self.boxWidth = boxWidth
    self.boxHeight = boxHeight
-   self.letters = {
-      x = (boxWidth / 2) - (font:getWidth('a') / 2),
-      y = love.graphics.getHeight() - (boxHeight / 2) - (font:getHeight('a') / 2)
-   }
 end
 
-function Keyboard:update()
-   if pressed then -- TODO
-      self.alphabet = self[pressed]
+function Keyboard:update(nextLetter)
+   self.nextLetter = nextLetter
+   if self[nextLetter] then
+      self.helper = nil
    else
-      self.alphabet = self.homerow
+      self.helper = self:findHomerow(nextLetter)
    end
 end
 
 function Keyboard:draw()
-   if self.alphabet then
-      for i=1,8 do
-	 local letter = self.alphabet[i]
-	 local colors = self.colors[self.homerow[i]]
-	 self:drawBox(letter, colors, i - 1)
+   for i=1,#self.homerow do
+      local letter = self.homerow[i]
+      local colors = self.colors[self.homerow[i]]
+      local alpha = 128
+      if self.nextLetter == letter then alpha = 255 end
+      if self.helper == letter then alpha = 255 end
+      local x = self.boxWidth * (i - 1)
+      local y = love.graphics.getHeight() - self.boxHeight
+      self:drawBox(letter, x, y, colors, alpha)
+   end
+
+   for i=1,#self.homerow do
+      local letter = ''
+      local alpha = 128
+      if self.helper then
+	 letter = self[self.helper][i]
+	 if letter == self.nextLetter then alpha = 255 end
       end
-   else
-      for i=1,8 do
-	 self:drawBox('', {0.12, 0.12 * i, 0.12, 0.5}, i - 1)
-      end
+      local colors = self.colors[self.homerow[i]]
+      local x = self.boxWidth * (i - 1)
+      local y = love.graphics.getHeight() - self.boxHeight * 2
+      self:drawBox(letter, x, y, colors, alpha)
    end
 end
 
-function Keyboard:drawBox(letter, colors, placement)
-   local x = self.boxWidth * placement
-   local y = love.graphics.getHeight() - self.boxHeight
-   self:setColor(colors)
+function Keyboard:drawBox(letter, x, y, colors, alpha)
+   self:setColor(colors, alpha)
    love.graphics.rectangle('fill', x, y, self.boxWidth, self.boxHeight)
    if letter then
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(self.font)
-      love.graphics.print(letter, self.letters.x + x, self.letters.y)
+      lx = (self.boxWidth / 2) - (self.font:getWidth(letter) / 2)
+      ly = y  + (self.boxHeight / 2) - (self.font:getHeight(letter) / 2)
+      love.graphics.print(letter, lx + x, ly)
    end
 end
 
-function Keyboard:setColor(rgba)
-   if not rgba[4] then rgba[4] = 255 end
-   love.graphics.setColor(rgba[1]/255, rgba[2]/255, rgba[3]/255, rgba[4]/255)
+function Keyboard:setColor(rgb, a)
+   if not a then a = 255 end
+   love.graphics.setColor(rgb[1]/255, rgb[2]/255, rgb[3]/255, a/255)
+end
+
+function Keyboard:findHomerow(letter)
+   for i=1,#self.homerow do
+      local homerow = self.homerow[i]
+      if self:contains(letter, self[homerow]) then
+	 return homerow
+      end
+   end
+end
+
+function Keyboard:contains(letter, list)
+   for i,v in pairs(list) do
+      if letter == v then
+	 return true
+      end
+   end
+
+   return false
 end
 
 return Keyboard

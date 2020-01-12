@@ -22,7 +22,7 @@ function love.update(dt)
       wordpro:newWord()
    end
 
-   keyboard:update()
+   keyboard:update(wordpro.nextLetter)
 end
 
 function love.draw()
