@@ -13,7 +13,9 @@ function love.load()
 		 love.graphics.getWidth() / 2, boxHeight)
 
    background = {
-      image = love.graphics.newImage('images/backgroundForest.png')
+      image = love.graphics.newImage('images/backgroundColorForest.png'),
+      x = 0,
+      y = -64
    }
 end
 
@@ -27,7 +29,8 @@ end
 
 function love.draw()
    love.graphics.setColor(1, 1, 1)
-   love.graphics.draw(background.image, 0, 0)
+   love.graphics.draw(background.image,
+		      background.x, background.y)
 
    keyboard:draw()
    wordpro:draw()
