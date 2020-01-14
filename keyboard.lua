@@ -31,6 +31,11 @@ function Keyboard:update(nextLetter)
 end
 
 function Keyboard:draw()
+   love.graphics.setColor(0, 0, 0)
+   love.graphics.rectangle('fill',
+			   0, love.graphics.getHeight() - self.boxHeight * 2,
+			   love.graphics.getWidth(), self.boxHeight * 2)
+
    for i=1,#self.homerow do
       local letter = self.homerow[i]
       local colors = self.colors[self.homerow[i]]
