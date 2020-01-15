@@ -4,10 +4,9 @@ easy = File.open('easy.txt', 'w')
 medium = File.open('medium.txt', 'w')
 hard = File.open('hard.txt', 'w')
 
-File.foreach('words_alpha.txt').with_index do |line, line_num|
+File.foreach('words_alpha.txt') do |line|
   word = line.chomp
   length = word.length
-  # puts "#{line_num}: #{word}" if (4..6).cover? length
   if (3..4).cover? length
     easy.puts word if rand > 0.9
   end
@@ -22,3 +21,18 @@ end
 easy.close
 medium.close
 hard.close
+
+
+mixed = File.open('mixed.txt', 'w')
+
+File.foreach('commons.txt') do |line|
+  word = line.chomp
+  length = word.length
+  if length > 6
+    mixed.puts word if  rand > 0.6
+  elsif (4..6).cover? length
+    mixed.puts word
+  end
+end
+
+mixed.close

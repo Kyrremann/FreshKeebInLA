@@ -1,11 +1,16 @@
 local WordPro = {
-   dictionary = {'train', 'snow', 'monkey', 'skiing'}
+   dictionary = {}
 }
 
-function WordPro:setup(font, center, y)
+function WordPro:setup(file, font, center, y)
    self.font = font
    self.center = center
    self.y = y
+
+   for line in io.lines(file) do 
+      self.dictionary[#self.dictionary + 1] = line
+   end
+
    self:newWord()
 end
 
@@ -48,9 +53,6 @@ function WordPro:draw()
 
    if self.typed ~= '' then
       love.graphics.setColor(1, 1, 1)
-      --if self.typingCorrectly then
-      --	 love.graphics.setColor(0, 1, 0)
-      --end
       love.graphics.print(self.letter, self.center - self.letterWidth, self.y)
       love.graphics.setColor(1, 1, 1, 0.75)
       love.graphics.print(self.typed:sub(1, #self.typed - 1), self.typedX, self.y)
