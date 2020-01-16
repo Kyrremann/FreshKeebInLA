@@ -22,7 +22,8 @@ function WordPro:newWord()
    self.current = self.dictionary[math.random(1, #self.dictionary)]
    self.typed = ''
    self.left = self.current
-   self.typingCorrectly = true
+   self.typingCorrectlyLetter = true
+   self.typingCorrectlyWord = true
    self.letter = ''
    self.nextLetter = self.left:sub(1, 1)
    self.letterWidth = self.font:getWidth(self.letter)
@@ -33,10 +34,11 @@ function WordPro:typing(letter)
    self.nextLetter = self.left:sub(1, 1)
 
    if letter ~= self.nextLetter then
-      self.typingCorrectly = false
+      self.typingCorrectlyLetter = false
+      self.typingCorrectlyWord = false
       return
    end
-   self.typingCorrectly = true
+   self.typingCorrectlyLetter = true
 
    self.left = self.left:sub(2)
    self.typed = self.typed .. letter
@@ -59,7 +61,7 @@ function WordPro:draw()
    end
 
    love.graphics.setColor(0, 1, 0)
-   if not self.typingCorrectly then
+   if not self.typingCorrectlyLetter then
       love.graphics.setColor(1, 0, 0)
    end
 
