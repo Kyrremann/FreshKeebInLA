@@ -1,7 +1,7 @@
 gamestate = require('gamestate')
 wordpro = require('wordpro')
 keyboard = require('keyboard')
-timer = require('timer')
+sideboard = require('sideboard')
 
 function love.load()
    love.window.setMode(1024, 768)
@@ -29,14 +29,15 @@ function love.load()
    }
    menu.x = (love.graphics.getWidth() / 2) - (menu.font:getWidth(menu.message) / 2)
 
-   timer:setup()
+   sideboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24))
 end
 
 function love.update()
    if gamestate:isMenu() then
    elseif gamestate:isGame() then
-      timer:update()
+      sideboard:update()
       if wordpro:isComplete() then
+	 sideboard:newWord(wordpro.current, wordpro.typingCorrectlyWord)
 	 wordpro:newWord()
       end
 
@@ -49,7 +50,7 @@ function love.draw()
    love.graphics.setColor(1, 1, 1)
    love.graphics.draw(background.image,
 		      background.x, background.y)
-   timer:draw()
+   sideboard:draw()
    keyboard:draw()
       
    if gamestate:isMenu() then
@@ -89,6 +90,7 @@ function love.keyreleased(key)
       end
    elseif gamestate:isGame() then
       wordpro:typing(key)
+      sideboard:typing(wordpro.typingCorrectlyLetter)
    elseif gamestate:isScore() then
    end
 end
@@ -96,5 +98,5 @@ end
 function newGame()
    gamestate:setGame()
    wordpro:newWord()
-   timer:start()
+   sideboard:start()
 end
