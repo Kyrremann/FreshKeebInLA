@@ -2,10 +2,10 @@ local WordPro = {
    dictionary = {}
 }
 
-function WordPro:setup(file, font, center, y)
+function WordPro:setup(file, font, center)
    self.font = font
    self.center = center
-   self.y = y
+   self.y = font:getHeight('I') * 2
 
    for line in io.lines(file) do 
       self.dictionary[#self.dictionary + 1] = line

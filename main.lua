@@ -14,7 +14,7 @@ function love.load()
 		  boxWidth, boxHeight)
    wordpro:setup('dictionaries/mixed.txt',
 		 love.graphics.newFont('Kenney Thick.ttf', 32),
-		 love.graphics.getWidth() / 2, boxHeight)
+		 love.graphics.getWidth() / 2)
 
    background = {
       image = love.graphics.newImage('images/backgroundColorForest.png'),
