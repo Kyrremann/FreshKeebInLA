@@ -12,8 +12,8 @@ function Sideboard:start()
 end
 
 function Sideboard:setDefaultValues()
-   self.duration = 60
-   self.left = 60
+   self.duration = 2
+   self.left = 2
    self.startTimer = 0
    self.score = 0
    self.combo = 1
@@ -25,10 +25,6 @@ end
 function Sideboard:update()
    local timeUsed = love.timer.getTime() - self.startTimer
    self.left = self.duration - timeUsed
-
-   if self.left <= 0 then
-      self:start()
-   end
 end
 
 function Sideboard:draw()
@@ -59,6 +55,13 @@ function Sideboard:typing(correctly)
       self.letterBonus = self.letterBonus * 2
    else
       self.letterBonus = 1
+   end
+end
+
+function Sideboard:timesUp()
+   if self.left <= 0 then
+      self.left = 0
+      return true
    end
 end
 
