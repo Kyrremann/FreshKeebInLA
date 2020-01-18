@@ -12,8 +12,8 @@ function Sideboard:start()
 end
 
 function Sideboard:setDefaultValues()
-   self.duration = 2
-   self.left = 2
+   self.duration = 60
+   self.left = 60
    self.startTimer = 0
    self.score = 0
    self.combo = 1
