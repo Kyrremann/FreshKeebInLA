@@ -15,10 +15,10 @@ local Keyboard = {
    }
 }
 
-function Keyboard:setup(font, boxWidth, boxHeight)
+function Keyboard:setup(font)
    self.font = font
-   self.boxWidth = boxWidth
-   self.boxHeight = boxHeight
+   self.boxWidth = love.graphics.getWidth() / 8
+   self.boxHeight = self.boxWidth / 2
 end
 
 function Keyboard:update(nextLetter)

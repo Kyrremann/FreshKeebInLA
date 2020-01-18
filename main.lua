@@ -1,17 +1,16 @@
 gamestate = require('gamestate')
 wordpro = require('wordpro')
-keyboard = require('keyboard')
 sideboard = require('sideboard')
 
-function love.load()
+function love.load(arg)
    love.window.setMode(1024, 768)
    gamestate:setMenu()
 
-   local boxWidth = love.graphics.getWidth() / 8
-   local boxHeight = boxWidth / 2
+   if not arg[1] or arg[1] == 'asetniop' then
+      keyboard = require('asetniop')
+   end
 
-   keyboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24),
-		  boxWidth, boxHeight)
+   keyboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24))
    wordpro:setup('dictionaries/mixed.txt',
 		 love.graphics.newFont('Kenney Thick.ttf', 32),
 		 love.graphics.getWidth() / 2)
