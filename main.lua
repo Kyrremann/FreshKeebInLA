@@ -6,8 +6,12 @@ function love.load(arg)
    love.window.setMode(1024, 768)
    gamestate:setMenu()
 
-   if not arg[1] or arg[1] == 'asetniop' then
+   keyboard = arg[1]
+
+   if not keyboard or keyboard == 'asetniop' then
       keyboard = require('asetniop')
+   elseif keyboard == 'butterstick' then
+      keyboard = require('butterstick')
    end
 
    keyboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24))
