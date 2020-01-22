@@ -7,7 +7,7 @@ function WordPro:setup(file, font, center)
    self.center = center
    self.y = font:getHeight('I') * 2
 
-   for line in io.lines(file) do 
+   for line in io.lines(file) do
       self.dictionary[#self.dictionary + 1] = line
    end
 
@@ -19,7 +19,8 @@ function WordPro:isComplete()
 end
 
 function WordPro:newWord()
-   self.current = self.dictionary[math.random(1, #self.dictionary)]
+   math.randomseed(os.time())
+   self.current = self.dictionary[math.random(#self.dictionary)]
    self.typed = ''
    self.left = self.current
    self.typingCorrectlyLetter = true
