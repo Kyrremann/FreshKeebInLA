@@ -23,7 +23,19 @@ firmware code before we ask to get it merged into the main QMK repo (that would 
 
 ### Butterstick (chinatsu)
 
-My friends [butterstick](https://github.com/chinatsu/qmk_firmware/tree/master/keyboards/butterstick) layout.
+My friend's [butterstick](https://github.com/chinatsu/qmk_firmware/tree/master/keyboards/butterstick) layout.
+
+To play, run `love . butterstick`!
+
+## Screenshots
+
+Here are two screenshots using the Ginni layout
+
+![Ginni 1](screenshots/ginni1.png) ![Ginni 2](screenshots/ginni2.png)
+
+Here is a screenshot using the Butterstick layout
+
+![Butterstick](screenshots/butterstick.png)
 
 ## Credits
 
