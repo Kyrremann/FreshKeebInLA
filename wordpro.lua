@@ -8,7 +8,9 @@ function WordPro:setup(file, font, center)
    self.y = font:getHeight('I') * 2
 
    for line in io.lines(file) do
-      self.dictionary[#self.dictionary + 1] = line
+      if not line:match("'") then -- don't include words containing ' for now
+        self.dictionary[#self.dictionary + 1] = line
+      end
    end
 
    self:newWord()
@@ -61,13 +63,13 @@ function WordPro:draw()
       love.graphics.print(self.typed:sub(1, #self.typed - 1), self.typedX, self.y)
    end
 
-   love.graphics.setColor(0, 1, 0)
+   love.graphics.setColor(0, 0, 1)
    if not self.typingCorrectlyLetter then
       love.graphics.setColor(1, 0, 0)
    end
 
    love.graphics.print(self.nextLetter, self.center, self.y)
-   love.graphics.setColor(1, 1, 1, 0.75)
+   love.graphics.setColor(0.2, 0.2, 0.2, 0.75)
    love.graphics.print(self.left:sub(2), self.center + self.nextLetterWidth, self.y)
 end
 
