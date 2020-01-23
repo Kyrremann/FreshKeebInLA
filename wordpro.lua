@@ -58,9 +58,9 @@ function WordPro:draw()
 
    if self.typed ~= '' then
       love.graphics.setColor(1, 1, 1)
-      love.graphics.print(self.letter, self.center - self.letterWidth, self.y)
+      love.graphics.print(self.letter:upper(), self.center - self.letterWidth, self.y)
       love.graphics.setColor(1, 1, 1, 0.75)
-      love.graphics.print(self.typed:sub(1, #self.typed - 1), self.typedX, self.y)
+      love.graphics.print(self.typed:sub(1, #self.typed - 1):upper(), self.typedX, self.y)
    end
 
    love.graphics.setColor(0, 0, 1)
@@ -68,9 +68,9 @@ function WordPro:draw()
       love.graphics.setColor(1, 0, 0)
    end
 
-   love.graphics.print(self.nextLetter, self.center, self.y)
+   love.graphics.print(self.nextLetter:upper(), self.center, self.y)
    love.graphics.setColor(0.2, 0.2, 0.2, 0.75)
-   love.graphics.print(self.left:sub(2), self.center + self.nextLetterWidth, self.y)
+   love.graphics.print(self.left:sub(2):upper(), self.center + self.nextLetterWidth, self.y)
 end
 
 return WordPro

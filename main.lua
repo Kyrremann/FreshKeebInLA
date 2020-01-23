@@ -1,6 +1,7 @@
 gamestate = require('gamestate')
 wordpro = require('wordpro')
 sideboard = require('sideboard')
+font = 'Cousine-Regular.ttf'
 
 function love.load(arg)
    love.window.setMode(1024, 768)
@@ -14,9 +15,12 @@ function love.load(arg)
       keyboard = require('butterstick')
    end
 
-   keyboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24))
+   local fontSize = love.graphics.getHeight() / 32
+   keyboard:setup(love.graphics.newFont(font, fontSize))
+
+   local fontSize = love.graphics.getHeight() / 24
    wordpro:setup('dictionaries/mixed.txt',
-		 love.graphics.newFont('Kenney Thick.ttf', 32),
+		 love.graphics.newFont(font, fontSize),
 		 love.graphics.getWidth() / 2)
 
    background = {
@@ -25,8 +29,9 @@ function love.load(arg)
       y = -64
    }
 
+   local fontSize = love.graphics.getHeight() / 24
    menu = {
-      font = love.graphics.newFont('Kenney Thick.ttf', 32),
+      font = love.graphics.newFont(font, fontSize),
       message = 'Press any key to start',
       y = love.graphics.getHeight() / 2
    }
@@ -36,7 +41,8 @@ function love.load(arg)
       y = love.graphics.getHeight() / 2
    }
 
-   sideboard:setup(love.graphics.newFont('Kenney Thick.ttf', 24))
+   local fontSize = love.graphics.getHeight() / 32
+   sideboard:setup(love.graphics.newFont(font, fontSize))
 end
 
 function love.update()
