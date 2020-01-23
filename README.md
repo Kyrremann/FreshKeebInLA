@@ -39,5 +39,6 @@ Here is a screenshot using the Butterstick layout
 
 ## Credits
 
-Thanks to who ever made ASETNIOP, and thanks to [Kenney](https://www.kenney.nl/) for the great free and open game
-assets!
+Thanks to [Zack Dennis](https://github.com/asetniop) who made ASETNIOP, and thanks to [Kenney](https://www.kenney.nl/)
+for the great free and open game assets! Thanks to
+[Google Fonts](https://fonts.google.com/specimen/Cousine?selection.family=Cousine) for font.
