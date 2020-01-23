@@ -4,7 +4,7 @@ sideboard = require('sideboard')
 font = 'Cousine-Regular.ttf'
 
 function love.load(arg)
-   love.window.setMode(1024, 768)
+   success = love.window.setFullscreen(true)
    gamestate:setMenu()
 
    keyboard = arg[1]
