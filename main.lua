@@ -62,7 +62,7 @@ function love.draw()
 		      background.x, background.y)
    sideboard:draw()
    keyboard:draw()
-      
+   
    if gamestate:isMenu() then
       darkenScreen()
       love.graphics.setColor(0, 0, 0)
