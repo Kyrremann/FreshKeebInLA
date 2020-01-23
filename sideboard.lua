@@ -32,14 +32,11 @@ function Sideboard:draw()
    love.graphics.setFont(self.font)
    love.graphics.setColor(0, 0, 0)
    love.graphics.print("Score " .. self.score, self.x, self.y)
+   love.graphics.print("Time " .. time, self.x, self.y + self.fontHeight * 2)
    if self.combo >= 10 then
        love.graphics.setColor(1, 0.5, 0)
-       love.graphics.print("Combo " .. self.combo .. "x", self.x, self.y + self.fontHeight)
-       love.graphics.setColor(0, 0, 0)
-   else
-       love.graphics.print("Combo " .. self.combo .. "x", self.x, self.y + self.fontHeight)
    end
-   love.graphics.print("Time " .. time, self.x, self.y + self.fontHeight * 2)
+   love.graphics.print("Combo " .. self.combo .. "x", self.x, self.y + self.fontHeight)
 end
 
 function Sideboard:newWord(word, typingCorrectly)
