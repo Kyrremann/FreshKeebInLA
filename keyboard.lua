@@ -5,12 +5,12 @@ function Keyboard:drawBox(letter, x, y, colors, alpha, boxWidth, boxHeight)
    boxWidth = boxWidth or self.boxWidth
    boxHeight = boxHeight or self.boxHeight
    self:setColor(colors, alpha)
-   love.graphics.rectangle('fill', self.xBase + x, y, self.boxWidth, self.boxHeight)
+   love.graphics.rectangle('fill', x + self.xBase, y, boxWidth, boxHeight)
    if letter then
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(self.font)
-      local lx = (self.boxWidth / 2) - (self.font:getWidth(letter) / 2)
-      local ly = y  + (self.boxHeight / 2) - (self.font:getHeight(letter) / 2)
+      local lx = (boxWidth / 2) - (self.font:getWidth(letter) / 2)
+      local ly = y  + (boxHeight / 2) - (self.font:getHeight(letter) / 2)
       love.graphics.print(letter, self.xBase + lx + x, ly)
    end
 end
