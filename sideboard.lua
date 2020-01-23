@@ -44,17 +44,13 @@ function Sideboard:draw()
 end
 
 function Sideboard:newWord(word, typingCorrectly)
-   self.letterBonus = 1
-   if not typingCorrectly then
-      self.combo = 1
-   end
-
    self.score = self.score + self.combo * #word
 
    if typingCorrectly then
       self.combo = self.combo + 1
    end
 
+   self.letterBonus = 1
    self.words = self.words + 1
 end
 
@@ -63,6 +59,7 @@ function Sideboard:typing(correctly)
       self.score = self.score + self.letterBonus
       self.letterBonus = self.letterBonus * 2
    else
+      self.combo = 1
       self.letterBonus = 1
    end
 end
