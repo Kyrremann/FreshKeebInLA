@@ -17,8 +17,9 @@ local Keyboard = {
 
 function Keyboard:setup(font)
    self.font = font
-   self.boxWidth = love.graphics.getWidth() / 8
-   self.boxHeight = self.boxWidth / 2
+   self.boxWidth = math.floor(love.graphics.getHeight() / 8)
+   self.boxHeight = math.floor(self.boxWidth / 2)
+   self.xBase = (love.graphics.getWidth() / 2) - 4 * self.boxWidth
 end
 
 function Keyboard:update(nextLetter)
@@ -33,8 +34,10 @@ end
 function Keyboard:draw()
    love.graphics.setColor(0, 0, 0)
    love.graphics.rectangle('fill',
-			   0, love.graphics.getHeight() - self.boxHeight * 2,
-			   love.graphics.getWidth(), self.boxHeight * 2)
+			   self.xBase - 4,
+			   (love.graphics.getHeight() - self.boxHeight * 2) - 4,
+			   (self.boxWidth * 8) + 8,
+			   (self.boxHeight * 2) + 4)
 
    for i=1,#self.homerow do
       local letter = self.homerow[i]
@@ -63,13 +66,13 @@ end
 
 function Keyboard:drawBox(letter, x, y, colors, alpha)
    self:setColor(colors, alpha)
-   love.graphics.rectangle('fill', x, y, self.boxWidth, self.boxHeight)
+   love.graphics.rectangle('fill', self.xBase + x, y, self.boxWidth, self.boxHeight)
    if letter then
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(self.font)
-      lx = (self.boxWidth / 2) - (self.font:getWidth(letter) / 2)
-      ly = y  + (self.boxHeight / 2) - (self.font:getHeight(letter) / 2)
-      love.graphics.print(letter, lx + x, ly)
+      local lx = (self.boxWidth / 2) - (self.font:getWidth(letter) / 2)
+      local ly = y  + (self.boxHeight / 2) - (self.font:getHeight(letter) / 2)
+      love.graphics.print(letter:upper(), self.xBase + lx + x, ly)
    end
 end
 
