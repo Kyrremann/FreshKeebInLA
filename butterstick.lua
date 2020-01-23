@@ -6,27 +6,24 @@ local Keyboard = {
 
 function Keyboard:setup(font)
    self.font = font
-   self.boxWidth = love.graphics.getWidth() / 10
-   self.boxHeight = self.boxWidth / 2
+   self.boxWidth = math.floor(love.graphics.getHeight() / 10)
+   self.boxHeight = math.floor(self.boxWidth / 2)
+   self.xBase = (love.graphics.getWidth() / 2) - 5 * self.boxWidth
 end
 
 function Keyboard:update(nextLetter)
    self.nextLetter = nextLetter
---   if self[nextLetter] then
---      self.helper = nil
---   else
---      self.helper = self:findLetter(nextLetter)
---   end
 end
 
 function Keyboard:draw()
    love.graphics.setColor(0, 0, 0)
    love.graphics.rectangle('fill',
-			   0, love.graphics.getHeight() - self.boxHeight * 2,
-			   love.graphics.getWidth(), self.boxHeight * 2)
+			   self.xBase - 4,
+			   (love.graphics.getHeight() - self.boxHeight * 2) - 4,
+			   (self.boxWidth * 10) + 8,
+			   (self.boxHeight * 2) + 4)
 
    local colors = {255, 255, 255}
-
    if self:contains(self.nextLetter, self.bothrow) then
       for i=1,#self.bothrow do
 	 local alpha = 128
@@ -57,37 +54,33 @@ function Keyboard:draw()
 	 self:drawBox(letter, x, y, colors, alpha)
       end
       love.graphics.rectangle('fill',
-			      0, love.graphics.getHeight() - self.boxHeight - 2,
-			      love.graphics.getWidth(), 4)
+			      self.xBase - 4,
+			      love.graphics.getHeight() - self.boxHeight - 2,
+			      (self.boxWidth * 10) + 8, 4)
    end
 
    for i=2,10 do
       local x = self.boxWidth * (i - 1)
       local y = love.graphics.getHeight() - self.boxHeight * 2
       love.graphics.rectangle('fill',
-			      x, y,
+			      self.xBase + x, y,
 			      4, self.boxHeight * 2)
    end
 
-   love.graphics.rectangle('fill',
-			   0, love.graphics.getHeight() - (self.boxHeight * 2) - 2,
-			   love.graphics.getWidth(), 4)
-   love.graphics.rectangle('fill',
-			   0, love.graphics.getHeight() - 2,
-			   love.graphics.getWidth(), 2)
 end
 
 function Keyboard:drawBox(letter, x, y, colors, alpha, boxWidth, boxHeight)
+   letter = letter:upper()
    boxWidth = boxWidth or self.boxWidth
    boxHeight = boxHeight or self.boxHeight
    self:setColor(colors, alpha)
-   love.graphics.rectangle('fill', x, y, boxWidth, boxHeight)
+   love.graphics.rectangle('fill', x + self.xBase, y, boxWidth, boxHeight)
    if letter then
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(self.font)
-      lx = (boxWidth / 2) - (self.font:getWidth(letter) / 2)
-      ly = y  + (boxHeight / 2) - (self.font:getHeight(letter) / 2)
-      love.graphics.print(letter, lx + x, ly)
+      local lx = (boxWidth / 2) - (self.font:getWidth(letter) / 2)
+      local ly = y  + (boxHeight / 2) - (self.font:getHeight(letter) / 2)
+      love.graphics.print(letter, self.xBase + lx + x, ly)
    end
 end
 
