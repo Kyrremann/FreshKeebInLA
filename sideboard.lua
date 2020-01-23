@@ -20,6 +20,7 @@ function Sideboard:setDefaultValues()
    self.letterBonus = 1
    self.x = 5
    self.y = 5
+   self.words = 0
 end
 
 function Sideboard:update()
@@ -29,10 +30,13 @@ end
 
 function Sideboard:draw()
    local time = math.floor(self.left)
+
    love.graphics.setFont(self.font)
    love.graphics.setColor(0, 0, 0)
    love.graphics.print("Score " .. self.score, self.x, self.y)
    love.graphics.print("Time " .. time, self.x, self.y + self.fontHeight * 2)
+   love.graphics.print("Words " .. self.words, self.x, self.y + self.fontHeight * 3)
+
    if self.combo >= 10 then
        love.graphics.setColor(1, 0.5, 0)
    end
@@ -50,6 +54,8 @@ function Sideboard:newWord(word, typingCorrectly)
    if typingCorrectly then
       self.combo = self.combo + 1
    end
+
+   self.words = self.words + 1
 end
 
 function Sideboard:typing(correctly)

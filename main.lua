@@ -81,7 +81,7 @@ function love.draw()
       wordpro:draw()
    elseif gamestate:isScore() then
       if not endScreen.x then
-	 endScreen.message = sideboard.score .. ' points'
+	 endScreen.message = sideboard.score .. ' points, ' .. sideboard.words .. ' words'
 	 endScreen.x = (love.graphics.getWidth() / 2) -
 	    (endScreen.font:getWidth(endScreen.message) / 2)
       end
