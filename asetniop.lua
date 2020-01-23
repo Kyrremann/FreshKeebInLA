@@ -64,6 +64,7 @@ function Keyboard:draw()
 end
 
 function Keyboard:drawBox(letter, x, y, colors, alpha)
+   letter = letter:upper()
    self:setColor(colors, alpha)
    love.graphics.rectangle('fill', self.xBase + x, y, self.boxWidth, self.boxHeight)
    if letter then
@@ -71,7 +72,7 @@ function Keyboard:drawBox(letter, x, y, colors, alpha)
       love.graphics.setFont(self.font)
       local lx = (self.boxWidth / 2) - (self.font:getWidth(letter) / 2)
       local ly = y  + (self.boxHeight / 2) - (self.font:getHeight(letter) / 2)
-      love.graphics.print(letter:upper(), self.xBase + lx + x, ly)
+      love.graphics.print(letter, self.xBase + lx + x, ly)
    end
 end
 
