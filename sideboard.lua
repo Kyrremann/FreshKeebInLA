@@ -57,7 +57,7 @@ end
 function Sideboard:typing(correctly)
    if correctly then
       self.score = self.score + self.letterBonus
-      self.letterBonus = self.letterBonus * 2
+      self.letterBonus = self.letterBonus + 1
    else
       self.combo = 1
       self.letterBonus = 1
