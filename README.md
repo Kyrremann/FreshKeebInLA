@@ -8,7 +8,7 @@ add your own strange layouts via pull requests!
 ## How to play
 
 If you have [LÖVE](https://love2d.org/) installed on your compute, you probably know what to do (`love .`), others can
-download the binaries from the [release-page](https://github.com/Kyrremann/asetniop-typing-game/releases).
+download the binaries from the [release-page](https://github.com/Kyrremann/FreshKeebInLA/releases).
 
 ## Keyboards/layouts
 
