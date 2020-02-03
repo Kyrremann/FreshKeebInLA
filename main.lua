@@ -2,21 +2,31 @@ gamestate = require('gamestate')
 wordpro = require('wordpro')
 sideboard = require('sideboard')
 font = 'Cousine-Regular.ttf'
+Keyboard = require('keyboard')
+Keyboards = {
+   selected = 'butterstick'
+}
 
 function love.load(arg)
    success = love.window.setFullscreen(true)
-   gamestate:setMenu()
-
-   keyboard = arg[1]
-
-   if not keyboard or keyboard == 'asetniop' then
-      keyboard = require('asetniop')
-   elseif keyboard == 'butterstick' then
-      keyboard = require('butterstick')
-   end
 
    local fontSize = love.graphics.getHeight() / 32
-   keyboard:setup(love.graphics.newFont(font, fontSize))
+   local lsKeyboards = io.popen("ls keyboards")
+   if lsKeyboards then
+      local keebs = lsKeyboards:read("*a")
+      for keeb in keebs:gmatch("[^\r\n]+") do
+	 keeb = keeb:sub(1, #keeb - 4)
+	 if keeb ~= 'keyboard' then
+	    Keyboards[keeb] = require('keyboards/' .. keeb)
+	    Keyboards[keeb]:setup(love.graphics.newFont(font, fontSize))
+	 end
+      end
+   else
+      print("ERROR - failed to read keebs from keyboard-folder")
+      love.event.quit()
+   end
+
+   gamestate:setMenu()
 
    local fontSize = love.graphics.getHeight() / 24
    wordpro:setup('dictionaries/mixed.txt',
@@ -32,10 +42,9 @@ function love.load(arg)
    local fontSize = love.graphics.getHeight() / 24
    menu = {
       font = love.graphics.newFont(font, fontSize),
-      message = 'Press any key to start',
       y = love.graphics.getHeight() / 2
    }
-   menu.x = (love.graphics.getWidth() / 2) - (menu.font:getWidth(menu.message) / 2)
+   menu.fontHeight = menu.font:getHeight('A')
    endScreen = {
       font = menu.font,
       y = love.graphics.getHeight() / 2
@@ -57,7 +66,7 @@ function love.update()
 	 gamestate:setScore()
       end
 
-      keyboard:update(wordpro.nextLetter)
+      Keyboards:update(wordpro.nextLetter)
    elseif gamestate:isScore() then
    end
 end
@@ -70,13 +79,19 @@ function love.draw()
    end
 
    sideboard:draw()
-   keyboard:draw()
+   Keyboards:draw()
    
    if gamestate:isMenu() then
       darkenScreen()
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(menu.font)
-      love.graphics.print(menu.message, menu.x, menu.y)
+      local anyKey = Keyboards:getEnterKeyCombo()
+      local message = 'Press ' .. anyKey .. ' to start'
+      local x = (love.graphics.getWidth() / 2) - (menu.font:getWidth(message) / 2)
+      love.graphics.print(message, x, menu.y)
+      message = '< ' .. Keyboards.selected .. ' >'
+      x = (love.graphics.getWidth() / 2) - (menu.font:getWidth(message) / 2)
+      love.graphics.print(message, x, menu.y + menu.fontHeight)
    elseif gamestate:isGame() then
       wordpro:draw()
    elseif gamestate:isScore() then
@@ -113,7 +128,11 @@ end
 
 function love.keyreleased(key)
    if gamestate:isMenu() then
-      if key ~= 'escape' then
+      if key == 'left' or key == 'right' then
+	 toggleKeyboard()
+      elseif Keyboards.selected == 'butterstick' and key == 'a' then
+	 newGame()
+      elseif Keyboards.selected == 'asetniop' and key == 'return' then
 	 newGame()
       end
    elseif gamestate:isGame() then
@@ -134,4 +153,28 @@ function newGame()
    gamestate:setGame()
    wordpro:newWord()
    sideboard:start()
+end
+
+function toggleKeyboard()
+   if Keyboards.selected == 'butterstick' then
+      Keyboards.selected = 'asetniop'
+   elseif Keyboards.selected == 'asetniop' then
+      Keyboards.selected = 'butterstick'
+   end
+end
+
+function Keyboards:draw()
+   self[self.selected]:draw()
+end
+
+function Keyboards:update(nextLetter)
+   self[self.selected]:update(nextLetter)
+end
+
+function Keyboards:getEnterKeyCombo()
+   if self.selected == 'asetniop' then
+      return 'n i o p'
+   elseif self.selected == 'butterstick' then
+      return 'q z'
+   end
 end
