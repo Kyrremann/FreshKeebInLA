@@ -1,0 +1,53 @@
+name: Create releases
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache
+      id: cache-love-windows
+      uses: actions/cache@v1.1.0
+      with:
+        path: love-windows
+        key: love.exe
+    - name: Download windows executable
+      if: steps.cache-love-windows.outputs.cache-hit != 'true'
+      run: wget -O love.exe https://bitbucket.org/rude/love/downloads/love-11.3-win64.exe
+    - name: Create .love-file
+      run: zip -9 -r FreshKeebInLA.love images/ keyboards/ *.lua
+    - name: Merge love.exe with .love
+      run: cat windows.exe FreshKeebInLA.love > FreshKeebInLA.exe
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+    - name: Upload Windows Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./FreshKeebInLA.exe
+        asset_name: FreshKeebInLA.exe
+        asset_content_type: application/exe
+    - name: Upload Love Asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./FreshKeebInLA.love
+        asset_name: FreshKeebInLA.love
+        asset_content_type: application/love
