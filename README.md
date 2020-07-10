@@ -5,6 +5,8 @@ This was originally made to (hopefully) learn you the strange keyboard layout ca
 [ASETNIOP](http://asetniop.com/). I've later added my friends Butterstick layout. Your also free to
 add your own strange layouts via pull requests!
 
+![Ginni 1](screenshots/ginni1.png)
+
 ## How to play
 
 If you have [LÖVE](https://love2d.org/) already installed on your computer, you probably know what to do (`love .`). 
@@ -21,7 +23,7 @@ Check out their website if you want to learn more. I made this game so I could g
 from [gBoards.ca](https://www.gboards.ca/product/ginni).
 
 If you have a Ginny you can download and flash the layout using
-[germ/gboards](https://github.com/germ/qmk_firmware/tree/gboards-ginny/keyboards/ginny) QMK fork.
+[qmk_firmware/gboards](https://github.com/qmk/qmk_firmware/tree/master/keyboards/gboards) QMK fork.
 
 ### Butterstick (chinatsu)
 
@@ -29,9 +31,9 @@ My friend's [butterstick](https://github.com/chinatsu/qmk_firmware/tree/master/k
 
 ## Screenshots
 
-Here are two screenshots using the Ginny layout
+Here are a screenshot using the Ginny layout
 
-![Ginni 1](screenshots/ginni1.png) ![Ginni 2](screenshots/ginni2.png)
+![Ginni 2](screenshots/ginni2.png)
 
 Here is a screenshot using the Butterstick layout
 
