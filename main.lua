@@ -35,9 +35,11 @@ function love.load(arg)
 
    background = {
       image = love.graphics.newImage('images/backgroundColorForest.png'),
-      y = -64
+      y = -64,
+      x = -love.graphics.getWidth(),
+      speed = .8
    }
-   background.tiles = love.graphics.getWidth() / background.image:getWidth()
+   background.tiles = (love.graphics.getWidth() * 2) / background.image:getWidth()
 
    local fontSize = love.graphics.getHeight() / 24
    menu = {
@@ -73,9 +75,15 @@ end
 
 function love.draw()
    love.graphics.setColor(1, 1, 1)
+
+   background.x = background.x + background.speed
+   if background.x > 0 then
+      background.x = -love.graphics.getWidth()
+   end
+
    for x=0,background.tiles do
-      love.graphics.draw(background.image,
-			 x * background.image:getWidth(), background.y)
+      x = x * background.image:getWidth()
+      love.graphics.draw(background.image, x + background.x, background.y)
    end
 
    sideboard:draw()
